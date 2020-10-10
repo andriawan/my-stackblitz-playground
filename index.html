@@ -1,0 +1,212 @@
+<div id="app"></div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.14.0/lodash.min.js"></script>
+
+<script>
+  _.mixin({
+  'mergeByKey' : function(arr1, arr2, key) {
+    var criteria = {};
+    criteria[key] = null;
+    return _.map(arr1, function(item) {
+      criteria[key] = item[key];
+      return _.merge(item, _.find(arr2, criteria));
+    });
+  }
+});
+
+var arr1 = [
+    {
+      adName: "##GALAXY 10",
+      adId: "123456GALAXY10",
+      spend: "9.9M",
+      adCampaign: [
+        {
+          campaignName: "Name Campaign 1",
+          campaignId: "1234567891"
+        },
+        {
+          campaignName: "Name Campaign 2",
+          campaignId: "1234567892"
+        },
+        {
+          campaignName: "Name Campaign 3",
+          campaignId: "1234567893"
+        },
+        {
+          campaignName: "Name Campaign 4",
+          campaignId: "1234567894"
+        },
+        {
+          campaignName: "Name Campaign 5",
+          campaignId: "1234567895"
+        },
+        {
+          campaignName: "Name Campaign 6",
+          campaignId: "1234567896"
+        },
+        {
+          campaignName: "Name Campaign 7",
+          campaignId: "1234567897"
+        },
+        {
+          campaignName: "Name Campaign 8",
+          campaignId: "1234567898",
+          selected: true,
+        },
+        {
+          campaignName: "Name Campaign 9",
+          campaignId: "1234567899"
+        },
+        {
+          campaignName: "Name Campaign 999",
+          campaignId: "1234567899SS"
+        }
+      ]
+    },
+    {
+      adName: "##GALAXY 11",
+      adId: "123456",
+      spend: "9.9M",
+      adCampaign: [
+        {
+          campaignName: "Name Campaign 10",
+          campaignId: "12345678910"
+        },
+        {
+          campaignName: "Name Campaign 11",
+          campaignId: "12345678911"
+        },
+        {
+          campaignName: "Name Campaign 12",
+          campaignId: "12345678912"
+        },
+        {
+          campaignName: "Name Campaign 13",
+          campaignId: "12345678913"
+        },
+        {
+          campaignName: "Name Campaign 14",
+          campaignId: "12345678914"
+        },
+        {
+          campaignName: "Name Campaign 15",
+          campaignId: "12345678915"
+        },
+        {
+          campaignName: "Name Campaign 16",
+          campaignId: "12345678916"
+        },
+        {
+          campaignName: "Name Campaign 17",
+          campaignId: "12345678917"
+        },
+        {
+          campaignName: "Name Campaign 18",
+          campaignId: "12345678918"
+        },
+        {
+          campaignName: "Name Campaign 19",
+          campaignId: "12345678919"
+        },
+        {
+          campaignName: "Name Campaign 20",
+          campaignId: "12345678920"
+        },
+        {
+          campaignName: "Name Campaign 21",
+          campaignId: "12345678921"
+        },
+        {
+          campaignName: "Name Campaign 22",
+          campaignId: "12345678922"
+        },
+        {
+          campaignName: "Name Campaign 23",
+          campaignId: "12345678923"
+        }
+      ]
+    },
+    {
+      adName: "##GALAXY 9",
+      adId: "123456GALAXY9",
+      spend: "9.9M",
+      adCampaign: [
+        {
+          campaignName: "Name Campaign 24",
+          campaignId: "12345678924"
+        },
+        {
+          campaignName: "Name Campaign 25",
+          campaignId: "12345678925"
+        },
+        {
+          campaignName: "Name Campaign 26",
+          campaignId: "12345678926"
+        }
+      ]
+    }
+  ]
+
+var arr2 = [
+  {
+      adName: "##GALAXY 10",
+      adId: "123456GALAXY10",
+      spend: "9.9M",
+      selected: true,
+      adCampaign: [
+        {
+          campaignName: "Name Campaign 1",
+          campaignId: "1234567891",
+          selected: true
+        },
+        {
+          campaignName: "Name Campaign 2",
+          campaignId: "1234567892"
+        },
+        {
+          campaignName: "Name Campaign 3",
+          campaignId: "1234567893"
+        },
+        {
+          campaignName: "Name Campaign 4",
+          campaignId: "1234567894"
+        },
+        {
+          campaignName: "Name Campaign 5",
+          campaignId: "1234567895",
+          selected: true
+        },
+        {
+          campaignName: "Name Campaign 6",
+          campaignId: "1234567896"
+        },
+        {
+          campaignName: "Name Campaign 7",
+          campaignId: "1234567897"
+        },
+        {
+          campaignName: "Name Campaign 8",
+          campaignId: "1234567898"
+        },
+        {
+          campaignName: "Name Campaign 9",
+          campaignId: "1234567899"
+        }
+      ]
+    }
+];
+
+var arr3 = _.mergeByKey(arr2, arr1, 'id');
+
+console.log(arr3);
+
+const merged = _(arr1) // start sequence
+  .keyBy('adId') // create a dictionary of the 1st array
+  .merge(_.keyBy(arr2, 'adId')) // create a dictionary of the 2nd array, and merge it to the 1st
+  .values() // turn the combined dictionary to array
+  .value(); // get the value (array) out of the sequence
+
+console.log('merged', merged);
+
+document.body.innerHTML = JSON.stringify(arr3, null, 4);
+</script>
